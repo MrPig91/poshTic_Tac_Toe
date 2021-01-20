@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    This starts an interactive Tic_Tac_Toe game in the console.
+    This starts an interactive Tic_Tac_Toe game in the console. Press Esc key to exit game.
 .DESCRIPTION
-    This starts an interactive Tic_Tac_Toe game in the console. Mostly using using mostly [System.Console] class.
+    This starts an interactive Tic_Tac_Toe game in the console. Mostly using using mostly [System.Console] class. Press Esc key to exit game.
 
     Was largely influenced and inspirated b the ASCII Box menues created by mossrich
     https://github.com/mossrich/PowershellRecipes/blob/master/AsciiMenu.ps1
