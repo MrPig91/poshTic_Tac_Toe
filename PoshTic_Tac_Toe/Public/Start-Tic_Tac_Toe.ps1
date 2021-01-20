@@ -24,18 +24,17 @@ function Start-Tic_Tac_Toe{
     param(
         [ValidateSet("Easy","Hard")]
         [string]$DifficultyLevel = "Hard",
-        [ValidateSet(1,3,5)]
-        [int]$Bestof
+        [ValidateSet(1,3,5,99)]
+        [int]$Bestof = 1
     )
 
-    $Player = "X" 
-    $top = [console]::CursorTop
-    $PlayerOScore = 0
-    $PLayerXScore = 0
-
-    $cursor = 0
-
-    $gameGrid = New-VirtualGameBoard
+    $Script:Player = "X" 
+    $Script:top = [console]::CursorTop
+    $Script:PlayerOScore = 0
+    $Script:PLayerXScore = 0
+    $Script:CurrentRound = 0
+    $Script:cursor = 0
+    $Script:gameGrid = New-VirtualGameBoard
 
     Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
     [console]::SetCursorPosition($gameGrid[0].x,$gameGrid[0].y)
@@ -53,8 +52,18 @@ function Start-Tic_Tac_Toe{
             }
             else{
                 $cursor = $previousPosition
+                $cursor = $cursor + 6
+                if ($cursor -ge 9){
+                    $cursor = $cursor % 9
+                }
+                if ($gameGrid[$cursor].Value -eq " "){
+                    [console]::SetCursorPosition($gameGrid[$cursor].X,$gameGrid[$cursor].Y)
+                }
+                else{
+                    $cursor = $previousPosition
+                }
             }
-        }
+        } #if down key
         elseif ($Key.key -eq [ConsoleKey]::UpArrow){
                 $previousPosition = $cursor
                 $cursor = $cursor - 3
@@ -66,6 +75,16 @@ function Start-Tic_Tac_Toe{
                 }
                 else{
                     $cursor = $previousPosition
+                    $cursor = $cursor - 6
+                    if ($cursor -le -1){
+                        $cursor = 9 + $cursor
+                    }
+                    if ($gameGrid[$cursor].Value -eq " "){
+                        [console]::SetCursorPosition($gameGrid[$cursor].X,$gameGrid[$cursor].Y)
+                    }
+                    else{
+                        $cursor = $previousPosition
+                    }
                 }
         }
         elseif ($Key.key -eq [ConsoleKey]::RightArrow){
@@ -95,14 +114,30 @@ function Start-Tic_Tac_Toe{
 
             if (Test-WinConditions $gameGrid){
                 $PLayerXScore++
-                $gameGrid = New-GameBoard
+                if (Test-BestofWinner -NumberofGames $Bestof -Score $PLayerXScore){
+                    [console]::SetCursorPosition(0,$top)
+                    Write-GameResults -Results "YouWin"
+                    sleep 2
+                    Clear-GameScreen
+                    break
+                }
+                $CurrentRound++
+                $gameGrid = New-VirtualGameBoard
                 [console]::SetCursorPosition(0,$top)
                 Write-GameResults -Results "X"
                 sleep 2
+                Clear-GameScreen
+                Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
+            }
+
+            #Test Draw
+             if (Test-DrawCondition -game $gameGrid){
+                $gameGrid = New-VirtualGameBoard
+                $CurrentRound++
                 [console]::SetCursorPosition(0,$top)
-                $WhiteSpace = (0.. ([console]::WindowWidth - 2) | foreach {"$([char]32)"})
-                Write-Host "`n$WhiteSpace`n$WhiteSpace`n$WhiteSpace`n$WhiteSpace`n$WhiteSpace`n$WhiteSpace`n$WhiteSpace"
-                [console]::SetCursorPosition(0,$top)
+                Write-GameResults -Results "Draw"
+                sleep 2
+                Clear-GameScreen
                 Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
             }
 
@@ -115,10 +150,30 @@ function Start-Tic_Tac_Toe{
             Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
             if (Test-WinConditions $gameGrid){
                 $PLayerOScore++
-                $gameGrid = New-GameBoard
+                if (Test-BestofWinner -NumberofGames $Bestof -Score $PLayerOScore){
+                    [console]::SetCursorPosition(0,$top)
+                    Write-GameResults -Results "YouLost"
+                    sleep 2
+                    Clear-GameScreen
+                    break
+                }
+                $CurrentRound++
+                $gameGrid = New-VirtualGameBoard
                 [console]::SetCursorPosition(0,$top)
                 Write-GameResults -Results "O"
-                sleep 1
+                sleep 2
+                Clear-GameScreen
+                Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
+            }
+            
+            #Test Draw
+            if (Test-DrawCondition -game $gameGrid){
+                $gameGrid = New-VirtualGameBoard
+                $CurrentRound++
+                [console]::SetCursorPosition(0,$top)
+                Write-GameResults -Results "Draw"
+                sleep 2
+                Clear-GameScreen
                 Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
             }
 
