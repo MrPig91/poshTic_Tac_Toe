@@ -25,7 +25,8 @@ function Start-Tic_Tac_Toe{
         [ValidateSet("Easy","Hard")]
         [string]$DifficultyLevel = "Hard",
         [ValidateSet(1,3,5,99)]
-        [int]$Bestof = 1
+        [int]$Bestof = 1,
+        [switch]$PlayVictorySong
     )
 
     $Script:Player = "X" 
@@ -117,6 +118,9 @@ function Start-Tic_Tac_Toe{
                 if (Test-BestofWinner -NumberofGames $Bestof -Score $PLayerXScore){
                     [console]::SetCursorPosition(0,$top)
                     Write-GameResults -Results "YouWin"
+                    if ($PlayVictorySong){
+                        Play-VictorySong
+                    }
                     sleep 2
                     Clear-GameScreen
                     break

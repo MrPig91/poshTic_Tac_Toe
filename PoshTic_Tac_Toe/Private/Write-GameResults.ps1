@@ -42,7 +42,7 @@ function Write-GameResults {
      \ \_/ /__  _   _  | |   | |  | | (___    | |    | |  | |  | |
       \   / _ \| | | | | |   | |  | |\___ \   | |    | |  | |  | |
        | | (_) | |_| | | |____ |__| |____) |  | |    |_|  |_|  |_|
-       |_|\___/ \__,_| |______\____/|_____/   |_|    (_)  (_)  (_)                                                               
+       |_|\___/ \__,_| |______\____/|_____/   |_|    (_)  (_)  (_)$whiteSpace`n$whiteSpace                                                              
    " -join "") -ForegroundColor Red
    Write-Host "$whiteSpace`n$whiteSpace"
 
