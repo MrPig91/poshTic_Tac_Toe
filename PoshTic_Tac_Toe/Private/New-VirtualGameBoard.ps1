@@ -1,4 +1,4 @@
-function New-GameBoard{
+function New-VirtualGameBoard{
     #this creates the virtual gameboard 0 being the top most left, and 8 being the right most bottom
     0.. 8 | foreach {
         $YAdjust = if ($_ -lt 3){2}
