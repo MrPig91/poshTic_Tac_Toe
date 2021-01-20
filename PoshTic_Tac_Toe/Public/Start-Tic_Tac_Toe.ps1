@@ -93,7 +93,7 @@ function Start-Tic_Tac_Toe{
             [console]::SetCursorPosition(0,$top)
             Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
 
-            if (CheckWinConditions $gameGrid){
+            if (Test-WinConditions $gameGrid){
                 $PLayerXScore++
                 $gameGrid = New-GameBoard
                 [console]::SetCursorPosition(0,$top)
@@ -113,7 +113,7 @@ function Start-Tic_Tac_Toe{
             [console]::SetCursorPosition(0,$top)
             [console]::CursorVisible = $true
             Draw-Board -PlayerXScore $PLayerXScore -PlayerOScore $PlayerOScore
-            if (CheckWinConditions $gameGrid){
+            if (Test-WinConditions $gameGrid){
                 $PLayerOScore++
                 $gameGrid = New-GameBoard
                 [console]::SetCursorPosition(0,$top)
