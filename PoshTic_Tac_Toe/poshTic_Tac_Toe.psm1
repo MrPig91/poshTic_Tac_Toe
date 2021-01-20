@@ -6,7 +6,6 @@
 
     Was largely influenced and inspirated b the ASCII Box menues created by mossrich
     https://github.com/mossrich/PowershellRecipes/blob/master/AsciiMenu.ps1
-    I mostly learned how to use ┌─┐│└┘ characters
 
     I also re-used a lot of code I wrote in my Fun.Arduino repo where I created Tic Tac Toe on an adruino with C.
 .EXAMPLE
