@@ -18,14 +18,15 @@
 .OUTPUTS
     Output (if any)
 .NOTES
-    Module Icon was created from https://game-icons.net/1x1/delapouite/tic-tac-toe.html#download
+    General notes
 #>
 function Start-Tic_Tac_Toe{
     param(
         [ValidateSet("Easy","Hard")]
         [string]$DifficultyLevel = "Hard",
         [ValidateSet(1,3,5,99)]
-        [int]$Bestof = 1
+        [int]$Bestof = 1,
+        [switch]$PlayVictorySong
     )
 
     $Script:Player = "X" 
@@ -117,6 +118,9 @@ function Start-Tic_Tac_Toe{
                 if (Test-BestofWinner -NumberofGames $Bestof -Score $PLayerXScore){
                     [console]::SetCursorPosition(0,$top)
                     Write-GameResults -Results "YouWin"
+                    if ($PlayVictorySong){
+                        Play-VictorySong
+                    }
                     sleep 2
                     Clear-GameScreen
                     break
@@ -548,7 +552,7 @@ function Write-GameResults {
      \ \_/ /__  _   _  | |   | |  | | (___    | |    | |  | |  | |
       \   / _ \| | | | | |   | |  | |\___ \   | |    | |  | |  | |
        | | (_) | |_| | | |____ |__| |____) |  | |    |_|  |_|  |_|
-       |_|\___/ \__,_| |______\____/|_____/   |_|    (_)  (_)  (_)                                                               
+       |_|\___/ \__,_| |______\____/|_____/   |_|    (_)  (_)  (_)$whiteSpace`n$whiteSpace                                                              
    " -join "") -ForegroundColor Red
    Write-Host "$whiteSpace`n$whiteSpace"
 
